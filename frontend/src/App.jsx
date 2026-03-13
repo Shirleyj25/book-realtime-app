@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const API_URL = "https://book-realtime-app.onrender.com";
+
+const socket = io(API_URL);
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -12,7 +14,7 @@ function App() {
   useEffect(() => {
 
     // Fetch books initially
-    axios.get("http://localhost:5000/books")
+    axios.get(`${API_URL}/books`)
       .then((res) => {
         setBooks(res.data);
       })
@@ -56,7 +58,7 @@ function App() {
     if (!title || !author) return;
 
     try {
-      await axios.post("http://localhost:5000/books", {
+      await axios.post(`${API_URL}/books`, {
         title,
         author
       });
